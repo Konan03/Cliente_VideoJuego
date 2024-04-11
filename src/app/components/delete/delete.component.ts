@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class DeleteComponent {
 
+  mostrarAlerta = false;
+
+  buscarClick(): void{
+    this.mostrarAlerta = true;
+  }
+
 }
