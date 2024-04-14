@@ -9,6 +9,10 @@ import { UpdateComponent } from './components/update/update.component';
 import { DeleteComponent } from './components/delete/delete.component';
 import { FormComponent } from './components/shared/form/form.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { HomeComponent } from './components/home/home.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './components/shared/search/search.component';
@@ -22,16 +26,17 @@ import { SearchComponent } from './components/shared/search/search.component';
     DeleteComponent,
     FormComponent,
     NavbarComponent,
-    SearchComponent,
-
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })
