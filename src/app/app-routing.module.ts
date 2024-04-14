@@ -5,6 +5,7 @@ import { ReadComponent } from './components/read/read.component';
 import { UpdateComponent } from './components/update/update.component';
 import { DeleteComponent } from './components/delete/delete.component';
 import { HomeComponent } from './components/home/home.component';
+import { FormComponent } from './components/shared/form/form.component';
 
 export const routes: Routes = [
   {path:'home', component: HomeComponent},

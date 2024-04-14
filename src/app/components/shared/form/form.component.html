@@ -1,1 +1,29 @@
-<p>form works!</p>
+<div class="row">
+    <div class="col-md-12">
+      <form method="post">
+        <h1> NgIf </h1>
+        
+        <fieldset>
+          
+          <legend><span class="number">1</span> ngIf</legend>
+        
+          <label for="validationServer01" class="form-label">ID:</label>
+          <input type="text" class="form-control" id="validationDefault01" name="id" required>
+        
+          <label for="validationDefault01" class="form-label">Name:</label>
+          <input type="text" class="form-control" id="validationDefault01" name="nombre" required>
+        
+          <label for="birthdate">Release Date:</label>
+		  <input type="date">
+
+          <label>Multiplayer:</label>
+          <input type="radio" value="under_13" name="multijugador"><label for="under_13" class="light">Yes</label><br>
+          <input type="radio" value="over_13" name="multijugador"><label for="over_13" class="light">No</label>
+          
+        </fieldset>
+       
+        <button type="submit">NgIf</button>
+        
+       </form>
+    </div>
+</div>
