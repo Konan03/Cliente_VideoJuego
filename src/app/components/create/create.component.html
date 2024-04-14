@@ -1,11 +1,9 @@
 <div class="row">
     <div class="col-md-12">
         <form class="row g-3 needs-validation" [formGroup]="formVideojuego" novalidate (ngSubmit)="crearVideojuego()">
-            <h1 *ngIf="!isUpdate"> Create VideoGame </h1>
-            <h1 *ngIf="isUpdate"> Update VideoGame </h1>
+            <h1> Create VideoGame </h1>
             <fieldset>
                 <legend style="font-size: 15px;"><span class="number">!</span>Digilencia todos los datos por favor.</legend>
-  
   
                     <label for="validationDefault01" class="form-label">ID:</label>
                     <input type="text" class="form-control" id="validationDefault01"
@@ -57,8 +55,7 @@
   
             </fieldset>
   
-                <button *ngIf="!isUpdate" class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Crear</button>
-                <button *ngIf="isUpdate" class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Actualizar</button>
+                <button class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Crear</button>
         </form>
     </div>
   </div>
