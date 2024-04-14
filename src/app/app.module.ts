@@ -13,8 +13,6 @@ import { HomeComponent } from './components/home/home.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './components/shared/search/search.component';
 
 @NgModule({
@@ -26,7 +24,8 @@ import { SearchComponent } from './components/shared/search/search.component';
     DeleteComponent,
     FormComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
