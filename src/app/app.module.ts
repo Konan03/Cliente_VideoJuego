@@ -10,6 +10,9 @@ import { DeleteComponent } from './components/delete/delete.component';
 import { FormComponent } from './components/shared/form/form.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 
+import { HttpClientModule } from '@angular/common/http';
+import { SearchComponent } from './components/shared/search/search.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,11 +21,14 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
     UpdateComponent,
     DeleteComponent,
     FormComponent,
-    NavbarComponent
+    NavbarComponent,
+    SearchComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration()
