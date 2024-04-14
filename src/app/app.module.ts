@@ -28,7 +28,9 @@ import { CardComponent } from './components/about/card/card.component';
     DeleteComponent,
     NavbarComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    AboutComponent,
+    CardComponent
   ],
   imports: [
     FormsModule,
