@@ -21,13 +21,16 @@ import { CardComponent } from './components/about/card/card.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    ReadComponent,
-    FormComponent,
+    AboutComponent,
+
     CreateComponent,
+    ReadComponent,
     UpdateComponent,
     DeleteComponent,
+
     NavbarComponent,
-    HomeComponent,
+    FormComponent,
+    CardComponent,
     SearchComponent
   ],
   imports: [
