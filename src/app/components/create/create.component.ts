@@ -1,13 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ServicioVideoJuegoService } from '../../service/servicio-video-juego.service';
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrl: './create.component.css'
+    selector: 'app-create',
+    templateUrl: './create.component.html',
+    styleUrls: ['./create.component.css']
 })
+export class CreateComponent implements OnInit {
 
+    isUpdate: boolean = false;
+    formVideojuego: FormGroup = new FormGroup({});
 
-export class CreateComponent {
-  constructor(){
-  }
+    constructor(private service: ServicioVideoJuegoService) { }
+
+    ngOnInit(): void {
+        this.formVideojuego = new FormGroup({
+            id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]), 
+            nombre: new FormControl('', [Validators.required]),
+            precio: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]+)?$')]),
+            multijugador: new FormControl('', [Validators.required]),
+            fechaLanzamiento: new FormControl('', [Validators.required])
+        });
+    }
+
+    crearVideojuego() {
+        if (this.formVideojuego.valid) {
+            this.service.agregarJuegos(this.formVideojuego.value).subscribe(resp => {
+                if (resp) {
+                    this.formVideojuego.reset();
+                }
+            });
+        } else {
+            if (this.formVideojuego.touched) {
+                Object.values(this.formVideojuego.controls).forEach(control => {
+                    control.markAsTouched();
+                });
+            }
+        }
+    }
 }

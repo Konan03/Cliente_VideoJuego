@@ -15,7 +15,6 @@ export class ReadComponent implements OnInit{
 
   ngOnInit(): void {
     this.listar();
-
   }
 
   listar(){
