@@ -1,1 +1,7 @@
-<p>read works!</p>
+<div *ngIf="juegos">
+  <ul>
+    <li *ngFor="let juegos of juegos">
+      {{juegos}}
+    </li>
+  </ul>
+</div>
