@@ -30,7 +30,7 @@ import { CardComponent } from './components/about/card/card.component';
     NavbarComponent,
     CardComponent,
     SearchComponent
-  ],
+],
   imports: [
     FormsModule,
     BrowserModule,

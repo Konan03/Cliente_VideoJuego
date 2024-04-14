@@ -18,4 +18,14 @@ export class ServicioVideoJuegoService {
     return this.http.post<VideojuegoModel[]>('http://localhost:8080/videojuego', request)
       .pipe(map((data) => data));
   }
+
+  buscarJuego(busqueda: string): Observable<VideojuegoModel> {
+    const params: any = { query: busqueda };
+    console.log('Parámetros de búsqueda:', params);
+    return this.http.get<VideojuegoModel>('http://localhost:8080/videojuego/buscar', { params });
+  }
+
+  actualizarJuego(id: number, videojuego: VideojuegoModel): Observable<VideojuegoModel> {
+    return this.http.put<VideojuegoModel>(`http://localhost:8080/videojuego/${id}`, videojuego);
+  }
 }
