@@ -14,6 +14,8 @@ import { CreateComponent } from './components/create/create.component';
 import { FormComponent } from './components/shared/form/form.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SearchComponent } from './components/shared/search/search.component';
+import { AboutComponent } from './components/about/about.component';
+import { CardComponent } from './components/about/card/card.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { SearchComponent } from './components/shared/search/search.component';
     UpdateComponent,
     DeleteComponent,
     NavbarComponent,
-    SearchComponent,
+    HomeComponent,
+    SearchComponent
   ],
   imports: [
     FormsModule,
