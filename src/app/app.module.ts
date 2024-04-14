@@ -14,6 +14,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './components/shared/search/search.component';
+import { AboutComponent } from './components/about/about.component';
+import { CardComponent } from './components/about/card/card.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { SearchComponent } from './components/shared/search/search.component';
     FormComponent,
     NavbarComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    AboutComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
