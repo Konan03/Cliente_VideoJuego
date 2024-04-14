@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, map} from "rxjs";
+import { VideojuegoModel } from '../model/videojuego.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicioVideoJuegoService {
-  private baseUrl = 'http://localhost:8080/videojuego';
+
   constructor(private http: HttpClient) { }
 
-  obtenerJuegos(): Observable<any> {
-    // Retorna un Observable que puedes suscribir en el componente
-    return this.http.get(this.baseUrl);
+  leerJuegos(): Observable<VideojuegoModel[]> {
+    return this.http.get<VideojuegoModel[]>('http://localhost:8080/videojuego/listar');
   }
+  
 }
