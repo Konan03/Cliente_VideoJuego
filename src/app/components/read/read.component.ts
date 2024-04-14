@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ServicioVideoJuegoService} from "../../service/servicio-video-juego.service";
+import { VideojuegoModel } from '../../model/videojuego.model';
 
 @Component({
   selector: 'app-read',
@@ -8,14 +9,20 @@ import {ServicioVideoJuegoService} from "../../service/servicio-video-juego.serv
 })
 export class ReadComponent implements OnInit{
 
-  public juegos: any;
+  listVideojuegos: VideojuegoModel [] = [];
+
   constructor(private servicioVideoJuegoService: ServicioVideoJuegoService) {}
 
-  ngOnInit() {
-    this.servicioVideoJuegoService.obtenerJuegos().subscribe((data: any) => {
-      this.juegos = data;
-    }, (error: any) => {
-      console.error('Hubo un error al obtener los juegos:', error);
-    });
+  ngOnInit(): void {
+    this.listar();
+
+  }
+
+  listar(){
+    this.servicioVideoJuegoService.leerJuegos().subscribe((data:any) => {
+      if(data){
+        this.listVideojuegos = data;
+      }
+    })
   }
 }
