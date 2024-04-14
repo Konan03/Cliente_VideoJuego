@@ -21,6 +21,12 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
 }
+
+.filtrer {
+
+  margin: auto;
+  width: 90%;
+}
  
 th {
   color:#D5DDE5;;

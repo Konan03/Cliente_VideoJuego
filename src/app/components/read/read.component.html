@@ -1,3 +1,12 @@
+<div class="filtrer mt-2">
+    <label for="filtroMultijugador">Filtrar por Multijugador:</label>
+    <select id="filtroMultijugador" [(ngModel)]="filtroMultijugador" (change)="onChangeFiltroMultijugador()">
+      <option value="todos">Todos</option>
+      <option value="true">Multijugador</option>
+      <option value="false">No Multijugador</option>
+    </select>
+</div>
+
 <table class="table-fill mt-2">
     <thead>
         <tr>

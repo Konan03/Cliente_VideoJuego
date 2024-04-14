@@ -8,8 +8,8 @@ import { VideojuegoModel } from '../../model/videojuego.model';
   styleUrl: './read.component.css'
 })
 export class ReadComponent implements OnInit{
-
   listVideojuegos: VideojuegoModel [] = [];
+  filtroMultijugador: string = 'todos';
 
   constructor(private servicioVideoJuegoService: ServicioVideoJuegoService) {}
 
@@ -20,8 +20,22 @@ export class ReadComponent implements OnInit{
   listar(){
     this.servicioVideoJuegoService.leerJuegos().subscribe((data:any) => {
       if(data){
-        this.listVideojuegos = data;
+        if (this.filtroMultijugador !== 'todos') {
+          this.listVideojuegos = data.filter((item:any) => {
+            if (this.filtroMultijugador === 'true') {
+              return item.multijugador === true;
+            } else {
+              return item.multijugador === false;
+            }
+          });
+        } else {
+          this.listVideojuegos = data;
+        }
       }
-    })
+    });
+  }
+
+  onChangeFiltroMultijugador() {
+    this.listar();
   }
 }
