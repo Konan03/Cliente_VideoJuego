@@ -1,29 +1,64 @@
 <div class="row">
-    <div class="col-md-12">
-      <form method="post">
-        <h1> NgIf </h1>
-        
-        <fieldset>
-          
-          <legend><span class="number">1</span> ngIf</legend>
-        
-          <label for="validationServer01" class="form-label">ID:</label>
-          <input type="text" class="form-control" id="validationDefault01" name="id" required>
-        
-          <label for="validationDefault01" class="form-label">Name:</label>
-          <input type="text" class="form-control" id="validationDefault01" name="nombre" required>
-        
-          <label for="birthdate">Release Date:</label>
-		  <input type="date">
+  <div class="col-md-12">
+      <form class="row g-3 needs-validation" [formGroup]="formVideojuego" novalidate (ngSubmit)="crearVideojuego()">
+          <h1 *ngIf="!isUpdate"> Create VideoGame </h1>
+          <h1 *ngIf="isUpdate"> Update VideoGame </h1>
+          <fieldset>
+              <legend style="font-size: 15px;"><span class="number">!</span>Digilencia todos los datos por favor.</legend>
 
-          <label>Multiplayer:</label>
-          <input type="radio" value="under_13" name="multijugador"><label for="under_13" class="light">Yes</label><br>
-          <input type="radio" value="over_13" name="multijugador"><label for="over_13" class="light">No</label>
-          
-        </fieldset>
-       
-        <button type="submit">NgIf</button>
-        
-       </form>
-    </div>
+
+                  <label for="validationDefault01" class="form-label">ID:</label>
+                  <input type="text" class="form-control" id="validationDefault01"
+                      placeholder="Ingrese el ID del VideoJuego" formControlName="id" required pattern="[0-9]+"
+                      [ngClass]="{ 'is-invalid': formVideojuego.get('id')?.invalid && (formVideojuego.get('id')?.touched || formVideojuego.get('id')?.dirty) }">
+                  <div class="invalid-feedback">
+                      Por favor ingrese un ID válido.
+                  </div>
+
+                  <label for="validationDefault02" class="form-label">Nombre:</label>
+                  <input type="text" class="form-control" id="validationDefault02"
+                      placeholder="Ingrese el nombre del VideoJuego" formControlName="nombre" required
+                      [ngClass]="{ 'is-invalid': formVideojuego.get('nombre')?.invalid && (formVideojuego.get('nombre')?.touched || formVideojuego.get('nombre')?.dirty) }">
+                  <div class="invalid-feedback">
+                      Por favor ingrese un nombre válido.
+                  </div>
+
+                  <label for="validationDefault03" class="form-label">Precio:</label>
+                  <input type="text" class="form-control" id="validationDefault03"
+                      placeholder="Ingrese el precio del VideoJuego" formControlName="precio" required pattern="[0-9]+(\.[0-9]+)?"
+                      [ngClass]="{ 'is-invalid': formVideojuego.get('precio')?.invalid && (formVideojuego.get('precio')?.touched || formVideojuego.get('precio')?.dirty) }">
+                  <div class="invalid-feedback">
+                      Por favor ingrese un precio válido.
+                  </div>
+
+                  <label for="validationDefault04" class="form-label">Fecha de lanzamiento:</label>
+                  <input type="datetime-local" class="form-control" id="validationDefault04"
+                      formControlName="fechaLanzamiento" required
+                      [ngClass]="{ 'is-invalid': formVideojuego.get('fechaLanzamiento')?.invalid && (formVideojuego.get('fechaLanzamiento')?.touched || formVideojuego.get('fechaLanzamiento')?.dirty) }">
+                  <div class="invalid-feedback">
+                      Por favor ingrese una fecha de lanzamiento válida.
+                  </div>
+
+
+                  <label class="form-label">Multijugador:</label>
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" value="true" formControlName="multijugador"
+                          id="multijugadorTrue">
+                      <label class="form-check-label" for="multijugadorTrue">Sí</label>
+                  </div>
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" value="false" formControlName="multijugador"
+                          id="multijugadorFalse">
+                      <label class="form-check-label" for="multijugadorFalse">No</label>
+                  </div>
+                  <div class="invalid-feedback">
+                      Por favor seleccione si el juego es multijugador o no.
+                  </div>
+
+          </fieldset>
+
+              <button *ngIf="!isUpdate" class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Crear</button>
+              <button *ngIf="isUpdate" class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Actualizar</button>
+      </form>
+  </div>
 </div>

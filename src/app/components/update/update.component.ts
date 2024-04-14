@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
-  styleUrl: './update.component.css'
+  styleUrls: ['./update.component.css']
 })
-export class UpdateComponent {
+export class UpdateComponent implements OnInit {
 
+  constructor() { }
+
+  ngOnInit(): void {
+    
+  }
 }
