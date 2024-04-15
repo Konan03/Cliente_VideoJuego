@@ -11,9 +11,14 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 })
 export class CreateComponent implements OnInit {
     mostrarAlerta: boolean = false;
+    mostrarAlertaDelete: boolean = false;
+    mostrarAlertaUpdate: boolean = false;
     isUpdate: boolean = false;
+    idDelete: boolean = false;
     formVideojuego: FormGroup = new FormGroup({});
     @Input() videojuegoParaEditar: VideojuegoModel | null = null;
+
+
 
     constructor(private service: ServicioVideoJuegoService) { }
 
@@ -47,6 +52,8 @@ export class CreateComponent implements OnInit {
     } else {
       this.crearVideojuego();
     }
+
+
   }
 
 
@@ -77,6 +84,11 @@ export class CreateComponent implements OnInit {
         next: (resp) => {
           // Manejo de la respuesta
           console.log('Juego actualizado', resp);
+          this.formVideojuego.reset();
+          this.mostrarAlertaUpdate = true;
+          setTimeout(() => {
+            this.mostrarAlertaUpdate = false;
+          }, 5000);
         },
         error: (e) => {
           // Manejo del error
@@ -93,4 +105,25 @@ export class CreateComponent implements OnInit {
       control.markAsTouched();
     });
   }
+
+
+  eliminarVideojuego(id: number) {
+    if (confirm('¿Estás seguro de que quieres eliminar este videojuego?')) {
+      this.service.eliminarJuego(id).subscribe({
+        next: () => {
+          console.log('Videojuego eliminado con éxito');
+          this.formVideojuego.reset();
+          this.mostrarAlertaDelete = true;
+          setTimeout(() => {
+            this.mostrarAlertaDelete = false;
+          }, 5000);
+
+        },
+        error: (error) => {
+          console.error('Hubo un error al eliminar el videojuego', error);
+        }
+      });
+    }
+  }
+
 }

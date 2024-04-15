@@ -1,13 +1,19 @@
 <div class="row g-3 needs-validation" [formGroup]="formVideojuego" novalidate (ngSubmit)="onSubmit()">
     <div class="col-md-12">
         <form class="row g-3 needs-validation" [formGroup]="formVideojuego" novalidate (ngSubmit)="crearVideojuego()">
-            <h1> Create VideoGame </h1>
+            <h1> Create VideoGame</h1>
             <div *ngIf="mostrarAlerta" class="alert alert-success" role="alert">
                 VideoJuego creado correctamente!
             </div>
+            <div *ngIf="mostrarAlertaDelete" class="alert alert-success" role="alert">
+              VideoJuego eliminado correctamente!
+            </div>
+            <div *ngIf="mostrarAlertaUpdate" class="alert alert-success" role="alert">
+              VideoJuego actualizado correctamente!
+            </div>
             <fieldset>
-                <legend style="font-size: 15px;"><span class="number">!</span>Digilencia todos los datos por favor.</legend>  
-                    
+                <legend style="font-size: 15px;"><span class="number">!</span>Digilencia todos los datos por favor.</legend>
+
                     <label for="validationDefault01" class="form-label">ID:</label>
                     <input type="text" class="form-control" id="validationDefault01"
                         placeholder="Ingrese el ID del VideoJuego" formControlName="id" required pattern="[0-9]+"
@@ -57,10 +63,10 @@
                     </div>
 
             </fieldset>
-  
+
                 <button *ngIf="!isUpdate" class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Crear</button>
                 <button *ngIf="isUpdate" class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Actualizar</button>
-                
+                <button *ngIf="isUpdate" class="buttonform btn btn-danger" type="button" (click)="eliminarVideojuego(formVideojuego.get('id')?.value)" [disabled]="!formVideojuego.get('id')?.value">Eliminar</button>
         </form>
     </div>
   </div>

@@ -39,4 +39,9 @@ export class ServicioVideoJuegoService {
   actualizarJuego(id: number, videojuego: VideojuegoModel): Observable<VideojuegoModel> {
     return this.http.put<VideojuegoModel>(`http://localhost:8080/videojuego/${id}`, videojuego);
   }
+
+  eliminarJuego(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/videojuego/${id}`);
+  }
+
 }
