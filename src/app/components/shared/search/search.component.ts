@@ -10,7 +10,8 @@ import { VideojuegoModel } from '../../../model/videojuego.model';
 })
 export class SearchComponent {
   @Output() juegoEncontrado = new EventEmitter<VideojuegoModel | null>();
-
+  mostrarAlerta: boolean = false;
+  mostrarAlertaNo: boolean = false;
   constructor(private servicioJuego: ServicioVideoJuegoService) {}
 
   buscar(busqueda: string) {
@@ -26,11 +27,21 @@ export class SearchComponent {
         error: (error) => {
           console.error('Error al buscar el juego', error);
           this.juegoEncontrado.emit(null);
+          this.mostrarAlertaNo = true;
+        setTimeout(() => {
+            this.mostrarAlertaNo = false;
+        }, 5000);
+        return;
         }
       });
     } else {
       console.log('No se ingresó término de búsqueda');
       this.juegoEncontrado.emit(null); // Puedes emitir null o no hacer nada si prefieres
+      this.mostrarAlerta = true;
+        setTimeout(() => {
+            this.mostrarAlerta = false;
+        }, 5000);
+        return;
     }
   }
 }

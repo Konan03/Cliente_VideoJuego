@@ -63,6 +63,9 @@
             <div *ngIf="mostrarAlerta" class="alert alert-success" role="alert">
                 Video Game updated correctly!
             </div>
+            <div *ngIf="mostrarAlertaID" class="alert alert-danger" role="alert">
+                The video game ID already exists!
+            </div>
                 <button class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Update</button>
         </form>
     </div>

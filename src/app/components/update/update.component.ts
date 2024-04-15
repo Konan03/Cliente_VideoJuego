@@ -11,12 +11,17 @@ import { ServicioVideoJuegoService } from '../../service/servicio-video-juego.se
 export class UpdateComponent implements OnInit {
 
   mostrarAlerta: boolean = false;
+  mostrarAlertaID: boolean = false;
+  mostrarAlertaTodo: boolean = false;
   formVideojuego: FormGroup = new FormGroup({});
+  existentIds: number[] = [];
   juegoEncontrado: VideojuegoModel | null = null;
 
   constructor(private service: ServicioVideoJuegoService) { }
 
   ngOnInit(): void {
+    this.obtenerIdsExistentes();
+
     this.formVideojuego = new FormGroup({
       id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
       nombre: new FormControl('', [Validators.required]),
@@ -26,9 +31,34 @@ export class UpdateComponent implements OnInit {
     });
   }
 
+  obtenerIdsExistentes() {
+    this.service.leerJuegos().subscribe(juegos => {
+      this.existentIds = juegos.map(juego => juego.id);
+    });
+  }
+
   actualizarVideojuego() {
     if (this.formVideojuego.valid) {
       const id = this.formVideojuego.get('id')?.value;
+      if(this.existentIds == id){
+        this.mostrarAlertaID = true;
+        setTimeout(() => {
+          this.mostrarAlertaID = false;
+        }, 5000);
+        return;
+      }
+
+      for (let index = 0; index < this.existentIds.length; index++) {
+        if (this.existentIds[index] == id) {
+          this.mostrarAlertaID = true;
+          setTimeout(() => {
+              this.mostrarAlertaID = false;
+          }, 5000);
+          return;
+        }
+      }
+      
+
       this.service.actualizarJuego(id, this.formVideojuego.value).subscribe({
         next: (resp) => {
           console.log('Juego actualizado', resp);
@@ -39,7 +69,6 @@ export class UpdateComponent implements OnInit {
           }, 5000);
         },
         error: (e) => {
-          console.error('Error al actualizar el juego', e);
         }
       });
     } else {
