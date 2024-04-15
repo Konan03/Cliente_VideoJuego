@@ -30,7 +30,7 @@
  
 th {
   color:#D5DDE5;;
-  background:#7209b7;
+  background:#4bc970;
   border-bottom:4px solid #9ea7af;
   border-right: 1px solid #343a45;
   font-size:16px;
@@ -40,6 +40,7 @@ th {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   vertical-align:middle;
   width: auto;
+  font-weight: bold;
 }
 
 th:first-child {
