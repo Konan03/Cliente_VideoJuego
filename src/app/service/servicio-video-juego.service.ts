@@ -20,8 +20,19 @@ export class ServicioVideoJuegoService {
   }
 
   buscarJuego(busqueda: string): Observable<VideojuegoModel> {
-    const params: any = { query: busqueda };
+    var params: any = { query: busqueda };
     console.log('Parámetros de búsqueda:', params);
+    // Comprobar si el valor es numérico
+    if (!isNaN(Number(busqueda))) {
+      // Si contiene un punto, asumimos que es un precio
+      if (busqueda.includes('.')) {
+        params = { precio: busqueda };
+      } else { // De lo contrario, es un ID
+        params = { id: busqueda };
+      }
+    } else { // Es un nombre
+      params = { nombre: busqueda };
+    }
     return this.http.get<VideojuegoModel>('http://localhost:8080/videojuego/buscar', { params });
   }
 
