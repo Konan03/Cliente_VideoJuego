@@ -29,7 +29,14 @@ export class CreateComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['videojuegoParaEditar'] && this.videojuegoParaEditar) {
       this.isUpdate = true; // Cambia al modo de actualización si hay un juego para editar
-      this.formVideojuego.patchValue(this.videojuegoParaEditar);
+      this.formVideojuego.patchValue({
+        id: this.videojuegoParaEditar.id,
+        nombre: this.videojuegoParaEditar.nombre,
+        precio: this.videojuegoParaEditar.precio,
+        fechaLanzamiento: this.videojuegoParaEditar.fechaLanzamiento,
+        // Transforma el valor booleano a string para los botones de radio
+        multijugador: this.videojuegoParaEditar.multijugador ? 'true' : 'false'
+      });
     }
   }
 
