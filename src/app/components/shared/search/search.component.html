@@ -7,3 +7,12 @@
     </button>
   </div>
 </div>
+
+  <div *ngIf="mostrarAlerta" class="alert field alert-danger" role="alert">
+    Please, enter a ID to search!
+  </div>
+  <div *ngIf="mostrarAlertaNo" class="alert field alert-danger" role="alert">
+    The video ID does not exist.
+  </div>
+
+

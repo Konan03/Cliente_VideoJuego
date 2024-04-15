@@ -8,7 +8,7 @@ import { ServicioVideoJuegoService } from '../../service/servicio-video-juego.se
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-  idExists: boolean = false;
+
   mostrarAlerta: boolean = false;
   mostrarAlertaID: boolean = false;
   existentIds: number[] = [];
@@ -40,6 +40,9 @@ export class CreateComponent implements OnInit {
       const id = this.formVideojuego.get('id')?.value;
       if (this.existentIds == id) {
         this.mostrarAlertaID = true;
+        setTimeout(() => {
+            this.mostrarAlertaID = false;
+        }, 5000);
         return;
       }
       this.service.agregarJuegos(this.formVideojuego.value).subscribe(resp => {

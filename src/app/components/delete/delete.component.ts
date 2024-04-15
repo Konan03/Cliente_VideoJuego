@@ -9,18 +9,28 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './delete.component.css'
 })
 export class DeleteComponent {
+  mostrarAlertaID: boolean = false
   mostrarAlerta: boolean = false;
   formVideojuego: FormGroup = new FormGroup({});
+  existentIds: number[] = [];
   
   constructor(private service: ServicioVideoJuegoService) { }
 
   ngOnInit(): void {
+    this.obtenerIdsExistentes();
+
     this.formVideojuego = new FormGroup({
       id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
       nombre: new FormControl('', [Validators.required]),
       precio: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]+)?$')]),
       multijugador: new FormControl('', [Validators.required]),
       fechaLanzamiento: new FormControl('', [Validators.required])
+    });
+  }
+
+  obtenerIdsExistentes() {
+    this.service.leerJuegos().subscribe(juegos => {
+      this.existentIds = juegos.map(juego => juego.id);
     });
   }
 
