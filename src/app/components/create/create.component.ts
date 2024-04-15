@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ServicioVideoJuegoService } from '../../service/servicio-video-juego.service';
 import {VideojuegoModel} from "../../model/videojuego.model";
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 @Component({
     selector: 'app-create',
@@ -9,7 +10,7 @@ import {VideojuegoModel} from "../../model/videojuego.model";
     styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-
+    mostrarAlerta: boolean = false;
     isUpdate: boolean = false;
     formVideojuego: FormGroup = new FormGroup({});
     @Input() videojuegoParaEditar: VideojuegoModel | null = null;
@@ -44,6 +45,10 @@ export class CreateComponent implements OnInit {
             this.service.agregarJuegos(this.formVideojuego.value).subscribe(resp => {
                 if (resp) {
                     this.formVideojuego.reset();
+                    this.mostrarAlerta = true;
+                    setTimeout(() => {
+                      this.mostrarAlerta = false;
+                  }, 5000);
                 }
             });
         } else {
