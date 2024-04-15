@@ -1,3 +1,3 @@
-<app-search ></app-search>
-<app-create></app-create>
+<app-search (juegoEncontrado)="onJuegoEncontrado($event)"></app-search>
+<app-create [videojuegoParaEditar]="juegoParaEditar"></app-create>
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges, OnChanges} from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ServicioVideoJuegoService } from '../../service/servicio-video-juego.service';
 import {VideojuegoModel} from "../../model/videojuego.model";
@@ -24,12 +24,14 @@ export class CreateComponent implements OnInit {
             multijugador: new FormControl('', [Validators.required]),
             fechaLanzamiento: new FormControl('', [Validators.required])
         });
-
-      if (this.videojuegoParaEditar) {
-        this.isUpdate = true;
-        this.formVideojuego.patchValue(this.videojuegoParaEditar);
-      }
     }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['videojuegoParaEditar'] && this.videojuegoParaEditar) {
+      this.isUpdate = true; // Cambia al modo de actualización si hay un juego para editar
+      this.formVideojuego.patchValue(this.videojuegoParaEditar);
+    }
+  }
 
   onSubmit() {
     if (this.isUpdate) {
@@ -38,6 +40,7 @@ export class CreateComponent implements OnInit {
       this.crearVideojuego();
     }
   }
+
 
     crearVideojuego() {
         if (this.formVideojuego.valid) {
@@ -61,9 +64,11 @@ export class CreateComponent implements OnInit {
       this.service.actualizarJuego(id, this.formVideojuego.value).subscribe({
         next: (resp) => {
           // Manejo de la respuesta
+          console.log('Juego actualizado', resp);
         },
         error: (e) => {
           // Manejo del error
+          console.error('Error al actualizar el juego', e);
         }
       });
     } else {
