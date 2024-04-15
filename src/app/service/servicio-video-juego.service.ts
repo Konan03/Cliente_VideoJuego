@@ -41,4 +41,11 @@ export class ServicioVideoJuegoService {
     return this.http.get<VideojuegoModel>('http://localhost:8080/videojuego/buscar', { params });
   }
 
+  buscarJuegoUnico(id: string): Observable<VideojuegoModel> {
+    const params = { id };
+    console.log('Buscando juego por ID:', id);
+    
+    return this.http.get<VideojuegoModel>('http://localhost:8080/videojuego/buscar', { params });
+  }
+
 }

@@ -15,10 +15,11 @@ export class SearchComponent {
 
   buscar(busqueda: string) {
 
-    if (busqueda.trim()) {
+    if (busqueda.trim()) { // Asegúrate de que la cadena de búsqueda no esté vacía
       console.log('Iniciando búsqueda con:', busqueda);
-      this.servicioJuego.buscarJuego(busqueda).subscribe({
+      this.servicioJuego.buscarJuegoUnico(busqueda).subscribe({
         next: (juego) => {
+          // Emitir el juego encontrado o null si no se encuentra nada
           console.log('Juego encontrado:', juego);
           this.juegoEncontrado.emit(juego);
         },
@@ -29,7 +30,7 @@ export class SearchComponent {
       });
     } else {
       console.log('No se ingresó término de búsqueda');
-      this.juegoEncontrado.emit(null);
+      this.juegoEncontrado.emit(null); // Puedes emitir null o no hacer nada si prefieres
     }
   }
 }

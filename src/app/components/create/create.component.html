@@ -2,9 +2,7 @@
     <div class="col-md-12">
         <form class="row g-3 needs-validation" [formGroup]="formVideojuego" novalidate (ngSubmit)="crearVideojuego()">
             <h1> Create VideoGame</h1>
-            <div *ngIf="mostrarAlerta" class="alert alert-success" role="alert">
-                Successfully created video game!
-            </div>
+            
             <fieldset>
                 <legend style="font-size: 15px;"><span class="number">!</span>Please fill out all the information.</legend>
 
@@ -60,8 +58,11 @@
                     </div>
 
             </fieldset>
-
+            <div *ngIf="mostrarAlerta" class="alert alert-success" role="alert">
+                Successfully created video game!
+            </div>
                 <button class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Create</button>
+                
         </form>
     </div>
   </div>

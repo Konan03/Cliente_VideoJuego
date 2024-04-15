@@ -8,9 +8,7 @@
     <div class="col-md-12">
         <form class="row g-3 needs-validation" [formGroup]="formVideojuego" novalidate (ngSubmit)="actualizarVideojuego()">
             
-            <div *ngIf="mostrarAlerta" class="alert alert-success" role="alert">
-                Video Game updated correctly!
-            </div>
+            
             <fieldset>
                 <legend style="font-size: 15px;"><span class="number">!</span>Please fill out all the information.</legend>
 
@@ -62,7 +60,9 @@
                     </div>
 
             </fieldset>
-
+            <div *ngIf="mostrarAlerta" class="alert alert-success" role="alert">
+                Video Game updated correctly!
+            </div>
                 <button class="buttonform btn btn-primary" type="submit" [disabled]="!formVideojuego.valid">Update</button>
         </form>
     </div>
