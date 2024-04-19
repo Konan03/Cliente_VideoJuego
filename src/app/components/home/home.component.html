@@ -1,31 +1,32 @@
 <div class="search-form">
-  <form [formGroup]="searchForm" (ngSubmit)="buscarVideojuego()">
-    <input type="text" formControlName="id" placeholder="Search by ID" aria-label="Buscar por ID">
-    <input type="text" formControlName="nombre" placeholder="Search by Name" aria-label="Buscar por Nombre">
-    <input type="text" formControlName="precio" placeholder="Search by Price" aria-label="Buscar por Precio">
-    <button type="submit" class="buttonform">Search</button>
-  </form>
-</div>
-
-<div *ngIf="juegosEncontrados.length > 0" class="table-fill">
-  <table>
-    <thead>
-      <tr>
-        <th class="text-center">ID</th>
-        <th class="text-center">Name</th>
-        <th class="text-center">Price</th>
-        <th class="text-center">Multiplayer</th>
-        <th class="text-center">Release Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let juego of juegosEncontrados">
-        <td class="text-center">{{ juego.id }}</td>
-        <td class="text-center">{{ juego.nombre }}</td>
-        <td class="text-center">{{ juego.precio }}</td>
-        <td class="text-center">{{ juego.multijugador ? 'Sí' : 'No' }}</td>
-        <td class="text-center">{{ juego.fechaLanzamiento | date: 'mediumDate' }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <form [formGroup]="searchForm" (ngSubmit)="buscarVideojuego()">
+      <input type="text" formControlName="id" placeholder="Buscar por ID" aria-label="Buscar por ID">
+      <input type="text" formControlName="nombre" placeholder="Buscar por Nombre" aria-label="Buscar por Nombre">
+      <input type="text" formControlName="precio" placeholder="Buscar por Precio" aria-label="Buscar por Precio">
+      <button type="submit" class="buttonform">Buscar</button>
+    </form>
+  </div>
+  
+  <div *ngIf="juegosEncontrados.length > 0" class="table-fill">
+    <table>
+      <thead>
+        <tr>
+          <th class="text-center">ID</th>
+          <th class="text-center">Nombre</th>
+          <th class="text-center">Precio</th>
+          <th class="text-center">Multijugador</th>
+          <th class="text-center">Fecha de Lanzamiento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let juego of juegosEncontrados">
+          <td class="text-center">{{ juego.id }}</td>
+          <td class="text-center">{{ juego.nombre }}</td>
+          <td class="text-center">{{ juego.precio }}</td>
+          <td class="text-center">{{ juego.multijugador ? 'Sí' : 'No' }}</td>
+          <td class="text-center">{{ juego.fechaLanzamiento | date: 'mediumDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
