@@ -1,6 +1,6 @@
 import {Component, Output} from '@angular/core';
-import {VideojuegoModel} from "../../model/videojuego.model";
-import { ServicioVideoJuegoService } from '../../service/servicio-video-juego.service';
+import {VideojuegoModel} from "../../../model/videojuego.model";
+import { ServicioVideoJuegoService } from '../../../service/servicio-video-juego.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({

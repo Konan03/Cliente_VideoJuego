@@ -1,21 +1,18 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {VideojuegoModel} from "../../model/videojuego.model";
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ServicioVideoJuegoService } from '../../service/servicio-video-juego.service';
+import { ServicioVideoJuegoService } from '../../../service/servicio-video-juego.service';
 
 @Component({
-  selector: 'app-update',
-  templateUrl: './update.component.html',
-  styleUrls: ['./update.component.css']
+  selector: 'app-create',
+  templateUrl: './create.component.html',
+  styleUrls: ['./create.component.css']
 })
-export class UpdateComponent implements OnInit {
+export class CreateComponent implements OnInit {
 
   mostrarAlerta: boolean = false;
   mostrarAlertaID: boolean = false;
-  mostrarAlertaTodo: boolean = false;
-  formVideojuego: FormGroup = new FormGroup({});
   existentIds: number[] = [];
-  juegoEncontrado: VideojuegoModel | null = null;
+  formVideojuego: FormGroup = new FormGroup({});
 
   constructor(private service: ServicioVideoJuegoService) { }
 
@@ -29,6 +26,7 @@ export class UpdateComponent implements OnInit {
       multijugador: new FormControl('', [Validators.required]),
       fechaLanzamiento: new FormControl('', [Validators.required])
     });
+    
   }
 
   obtenerIdsExistentes() {
@@ -37,38 +35,23 @@ export class UpdateComponent implements OnInit {
     });
   }
 
-  actualizarVideojuego() {
+  crearVideojuego() {
     if (this.formVideojuego.valid) {
       const id = this.formVideojuego.get('id')?.value;
-      if(this.existentIds == id){
+      if (this.existentIds == id) {
         this.mostrarAlertaID = true;
         setTimeout(() => {
-          this.mostrarAlertaID = false;
+            this.mostrarAlertaID = false;
         }, 5000);
         return;
       }
-
-      for (let index = 0; index < this.existentIds.length; index++) {
-        if (this.existentIds[index] == id) {
-          this.mostrarAlertaID = true;
-          setTimeout(() => {
-              this.mostrarAlertaID = false;
-          }, 5000);
-          return;
-        }
-      }
-      
-
-      this.service.actualizarJuego(id, this.formVideojuego.value).subscribe({
-        next: (resp) => {
-          console.log('Juego actualizado', resp);
+      this.service.agregarJuegos(this.formVideojuego.value).subscribe(resp => {
+        if (resp) {
           this.formVideojuego.reset();
           this.mostrarAlerta = true;
           setTimeout(() => {
             this.mostrarAlerta = false;
           }, 5000);
-        },
-        error: (e) => {
         }
       });
     } else {
@@ -80,20 +63,5 @@ export class UpdateComponent implements OnInit {
     Object.values(this.formVideojuego.controls).forEach(control => {
       control.markAsTouched();
     });
-  }
-
-  onJuegoEncontrado(juego: VideojuegoModel | null): void {
-    this.juegoEncontrado = juego;
-    if (juego) {
-      this.formVideojuego.patchValue({
-        id: juego.id,
-        nombre: juego.nombre,
-        precio: juego.precio,
-        multijugador: juego.multijugador.toString(),
-        fechaLanzamiento: juego.fechaLanzamiento
-      });
-    } else {
-      this.formVideojuego.reset();
-    }
   }
 }

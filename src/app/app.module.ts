@@ -7,29 +7,41 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { ReadComponent } from './components/read/read.component';
-import { UpdateComponent } from './components/update/update.component';
-import { DeleteComponent } from './components/delete/delete.component';
-import { CreateComponent } from './components/create/create.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SearchComponent } from './components/shared/search/search.component';
 import { AboutComponent } from './components/about/about.component';
 import { CardComponent } from './components/about/card/card.component';
 
+//VideoGames
+import { CreateComponent } from './components/videogame/create/create.component';
+import { ReadComponent } from './components/videogame/read/read.component';
+import { UpdateComponent } from './components/videogame/update/update.component';
+import { DeleteComponent } from './components/videogame/delete/delete.component';
+
+//Users
+import { CreateUserComponent } from './components/user/create-user/create-user.component';
+import { ReadUserComponent } from './components/user/read-user/read-user.component';
+import { UpdateUserComponent } from './components/user/update-user/update-user.component';
+import { DeleteUserComponent } from './components/user/delete-user/delete-user.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    CardComponent,
     AboutComponent,
+    NavbarComponent,
+    SearchComponent,
 
     CreateComponent,
     ReadComponent,
     UpdateComponent,
     DeleteComponent,
-
-    NavbarComponent,
-    CardComponent,
-    SearchComponent
+  
+    CreateUserComponent,
+    ReadUserComponent,
+    UpdateUserComponent,
+    DeleteUserComponent
 ],
   imports: [
     FormsModule,

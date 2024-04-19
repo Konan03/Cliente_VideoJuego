@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateComponent } from './components/create/create.component';
-import { ReadComponent } from './components/read/read.component';
-import { UpdateComponent } from './components/update/update.component';
-import { DeleteComponent } from './components/delete/delete.component';
+import { CreateComponent } from './components/videogame/create/create.component';
+import { ReadComponent } from './components/videogame/read/read.component';
+import { UpdateComponent } from './components/videogame/update/update.component';
+import { DeleteComponent } from './components/videogame/delete/delete.component';
 import { HomeComponent } from './components/home/home.component';
 import {AboutComponent} from "./components/about/about.component";
 

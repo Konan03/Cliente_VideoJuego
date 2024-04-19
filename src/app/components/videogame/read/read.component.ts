@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ServicioVideoJuegoService} from "../../service/servicio-video-juego.service";
-import { VideojuegoModel } from '../../model/videojuego.model';
+import {ServicioVideoJuegoService} from "../../../service/servicio-video-juego.service";
+import { VideojuegoModel } from '../../../model/videojuego.model';
 
 @Component({
   selector: 'app-read',
