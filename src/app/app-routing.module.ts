@@ -21,7 +21,7 @@ export const routes: Routes = [
   {path:'about', component:AboutComponent},
 
   {path:'create-videogame', component: CreateComponent},
-  {path:'read-videogame', component: ReadComponent},
+  {path:'read-videogame/:id', component: ReadComponent},
   {path:'update-videogame', component: UpdateComponent},
   {path:'delete-videogame', component: DeleteComponent},
   

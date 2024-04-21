@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import {ServicioVideoJuegoService} from "../../../service/servicio-video-juego.service";
-import { VideojuegoModel } from '../../../model/videojuego.model';
+import { UserModel } from '../../../model/user.model';
 
 
 @Component({
@@ -9,24 +9,23 @@ import { VideojuegoModel } from '../../../model/videojuego.model';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
-  @Output() juegoEncontrado = new EventEmitter<VideojuegoModel | null>();
+  @Output() usuarioEncontrado = new EventEmitter<UserModel | null>();
   mostrarAlerta: boolean = false;
   mostrarAlertaNo: boolean = false;
-  constructor(private servicioJuego: ServicioVideoJuegoService) {}
+  constructor(private servicio: ServicioVideoJuegoService) {}
 
   buscar(busqueda: string) {
 
-    if (busqueda.trim()) { // Asegúrate de que la cadena de búsqueda no esté vacía
+    if (busqueda.trim()) {
       console.log('Iniciando búsqueda con:', busqueda);
-      this.servicioJuego.buscarJuegoUnico(busqueda).subscribe({
+      this.servicio.buscarUsuarioUnico(busqueda).subscribe({
         next: (juego) => {
-          // Emitir el juego encontrado o null si no se encuentra nada
           console.log('Juego encontrado:', juego);
-          this.juegoEncontrado.emit(juego);
+          this.usuarioEncontrado.emit(juego);
         },
         error: (error) => {
-          console.error('Error al buscar el juego', error);
-          this.juegoEncontrado.emit(null);
+          console.error('Error al buscar el usuario', error);
+          this.usuarioEncontrado.emit(null);
           this.mostrarAlertaNo = true;
         setTimeout(() => {
             this.mostrarAlertaNo = false;
@@ -36,7 +35,7 @@ export class SearchComponent {
       });
     } else {
       console.log('No se ingresó término de búsqueda');
-      this.juegoEncontrado.emit(null); // Puedes emitir null o no hacer nada si prefieres
+      this.usuarioEncontrado.emit(null);
       this.mostrarAlerta = true;
         setTimeout(() => {
             this.mostrarAlerta = false;

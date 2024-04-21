@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ServicioVideoJuegoService} from "../../../service/servicio-video-juego.service";
 import { VideojuegoModel } from '../../../model/videojuego.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-read',
@@ -10,15 +11,20 @@ import { VideojuegoModel } from '../../../model/videojuego.model';
 export class ReadComponent implements OnInit{
   listVideojuegos: VideojuegoModel [] = [];
   filtroMultijugador: string = 'todos';
+  id: number = 0;
 
-  constructor(private servicioVideoJuegoService: ServicioVideoJuegoService) {}
+  constructor(private servicioVideoJuegoService: ServicioVideoJuegoService,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.listar();
+    this.route.params.subscribe(params => {
+      this.id = params['id']
+      this.listar(this.id);
+    })
   }
 
-  listar(){
-    this.servicioVideoJuegoService.leerJuegos().subscribe((data:any) => {
+  listar(id: number){
+    this.servicioVideoJuegoService.leerJuegos(id).subscribe((data:any) => {
       if(data){
         if (this.filtroMultijugador !== 'todos') {
           this.listVideojuegos = data.filter((item:any) => {
@@ -36,6 +42,6 @@ export class ReadComponent implements OnInit{
   }
 
   onChangeFiltroMultijugador() {
-    this.listar();
+      this.listar(this.id);
   }
 }

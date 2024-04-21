@@ -29,9 +29,9 @@ export class DeleteComponent {
   }
 
   obtenerIdsExistentes() {
-    this.service.leerJuegos().subscribe(juegos => {
+    /**this.service.leerJuegos().subscribe(juegos => {
       this.existentIds = juegos.map(juego => juego.id);
-    });
+    });*/
   }
 
   eliminarVideojuego(id: number) {

@@ -32,9 +32,9 @@ export class UpdateComponent implements OnInit {
   }
 
   obtenerIdsExistentes() {
-    this.service.leerJuegos().subscribe(juegos => {
+    /**this.service.leerJuegos().subscribe(juegos => {
       this.existentIds = juegos.map(juego => juego.id);
-    });
+    });*/
   }
 
   actualizarVideojuego() {
