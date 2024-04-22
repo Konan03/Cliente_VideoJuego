@@ -1,7 +1,8 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {VideojuegoModel} from "../../../model/videojuego.model";
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ServicioVideoJuegoService } from '../../../service/servicio-video-juego.service';
+import { UserModel } from '../../../model/user.model';
+import { VideojuegoModel } from '../../../model/videojuego.model';
 
 @Component({
   selector: 'app-update',
@@ -9,19 +10,18 @@ import { ServicioVideoJuegoService } from '../../../service/servicio-video-juego
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
-
+  mostrarForm: boolean = false;
+  mostrarForm2: boolean = false;
   mostrarAlerta: boolean = false;
   mostrarAlertaID: boolean = false;
-  mostrarAlertaTodo: boolean = false;
   formVideojuego: FormGroup = new FormGroup({});
-  existentIds: number[] = [];
+  existentIds: VideojuegoModel[] = [];
+  usuarioEncontrado: UserModel | null = null;
   juegoEncontrado: VideojuegoModel | null = null;
 
   constructor(private service: ServicioVideoJuegoService) { }
 
   ngOnInit(): void {
-    this.obtenerIdsExistentes();
-
     this.formVideojuego = new FormGroup({
       id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
       nombre: new FormControl('', [Validators.required]),
@@ -31,33 +31,16 @@ export class UpdateComponent implements OnInit {
     });
   }
 
-  obtenerIdsExistentes() {
-    /**this.service.leerJuegos().subscribe(juegos => {
-      this.existentIds = juegos.map(juego => juego.id);
-    });*/
-  }
-
   actualizarVideojuego() {
     if (this.formVideojuego.valid) {
       const id = this.formVideojuego.get('id')?.value;
-      if(this.existentIds == id){
+      if (this.existentIds.includes(id)) {
         this.mostrarAlertaID = true;
         setTimeout(() => {
           this.mostrarAlertaID = false;
         }, 5000);
         return;
       }
-
-      for (let index = 0; index < this.existentIds.length; index++) {
-        if (this.existentIds[index] == id) {
-          this.mostrarAlertaID = true;
-          setTimeout(() => {
-              this.mostrarAlertaID = false;
-          }, 5000);
-          return;
-        }
-      }
-      
 
       this.service.actualizarJuego(id, this.formVideojuego.value).subscribe({
         next: (resp) => {
@@ -69,6 +52,7 @@ export class UpdateComponent implements OnInit {
           }, 5000);
         },
         error: (e) => {
+          // Manejo de error
         }
       });
     } else {
@@ -82,18 +66,34 @@ export class UpdateComponent implements OnInit {
     });
   }
 
-  onJuegoEncontrado(juego: VideojuegoModel | null): void {
-    this.juegoEncontrado = juego;
-    if (juego) {
-      this.formVideojuego.patchValue({
-        id: juego.id,
-        nombre: juego.nombre,
-        precio: juego.precio,
-        multijugador: juego.multijugador.toString(),
-        fechaLanzamiento: juego.fechaLanzamiento
+  onUserEncontrado(user: UserModel | null): void {
+    this.usuarioEncontrado = user;
+    if (user) {
+      this.mostrarForm = true;
+      this.service.leerJuegos(user.id).subscribe(juegos => {
+        this.existentIds = juegos;
+        console.log('Lista de IDs de videojuegos:', this.existentIds);
       });
     } else {
       this.formVideojuego.reset();
     }
   }
+
+  onJuegoEncontrado(juego: VideojuegoModel | null): void {
+    if (juego) {
+      this.mostrarForm2 = true;
+      console.log(juego)
+      this.juegoEncontrado = juego;
+      this.formVideojuego.patchValue({
+        id: this.juegoEncontrado.id,
+        nombre: this.juegoEncontrado.nombre,
+        precio: this.juegoEncontrado.precio,
+        multijugador: this.juegoEncontrado.multijugador.toString(),
+        fechaLanzamiento: this.juegoEncontrado.fechaLanzamiento
+      });
+    } else {
+      this.juegoEncontrado = null;
+      this.formVideojuego.reset();
+    }
+  }    
 }

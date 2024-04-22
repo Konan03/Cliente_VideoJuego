@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SearchComponent } from './components/shared/search/search.component';
+import { Search2Component } from './components/shared/search2/search2.component';
 import { AboutComponent } from './components/about/about.component';
 import { CardComponent } from './components/about/card/card.component';
 
@@ -41,7 +42,8 @@ import { DeleteUserComponent } from './components/user/delete-user/delete-user.c
     CreateUserComponent,
     ReadUserComponent,
     UpdateUserComponent,
-    DeleteUserComponent
+    DeleteUserComponent,
+    Search2Component
 ],
   imports: [
     FormsModule,

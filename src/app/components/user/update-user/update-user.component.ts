@@ -1,74 +1,56 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { VideojuegoModel } from '../../../model/videojuego.model';
+import { UserModel } from '../../../model/user.model';
 import { ServicioVideoJuegoService } from '../../../service/servicio-video-juego.service';
 
 @Component({
   selector: 'app-update-user',
   templateUrl: './update-user.component.html',
-  styleUrl: './update-user.component.css'
+  styleUrls: ['./update-user.component.css']
 })
 export class UpdateUserComponent implements OnInit {
 
   mostrarAlerta: boolean = false;
   mostrarAlertaID: boolean = false;
-  mostrarAlertaTodo: boolean = false;
-  formVideojuego: FormGroup = new FormGroup({});
+  formUsuario: FormGroup = new FormGroup({});
   existentIds: number[] = [];
-  juegoEncontrado: VideojuegoModel | null = null;
+  usuarioEncontrado: UserModel | null = null;
 
-  constructor(private service: ServicioVideoJuegoService) { }
+  constructor(private servicioUsuario: ServicioVideoJuegoService) { }
 
   ngOnInit(): void {
     this.obtenerIdsExistentes();
 
-    this.formVideojuego = new FormGroup({
-      idUser: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
-      nombreUser: new FormControl('', [Validators.required]),
-      height: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]+)?$')]),
-      premium: new FormControl('', [Validators.required]),
+    this.formUsuario = new FormGroup({
+      id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+      nombre: new FormControl('', [Validators.required]),
+      estatura: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]+)?$')]),
+      esPremium: new FormControl('', [Validators.required]),
       fechaNacimiento: new FormControl('', [Validators.required])
     });
   }
 
   obtenerIdsExistentes() {
-    /**this.service.leerJuegos().subscribe(juegos => {
-      this.existentIds = juegos.map(juego => juego.id);
-    });*/
+    this.servicioUsuario.leerUsuarios().subscribe(usuarios => {
+      this.existentIds = usuarios.map(usuario => usuario.id);
+    });
   }
 
-  actualizarVideojuego() {
-    if (this.formVideojuego.valid) {
-      const id = this.formVideojuego.get('id')?.value;
-      if(this.existentIds == id){
-        this.mostrarAlertaID = true;
-        setTimeout(() => {
-          this.mostrarAlertaID = false;
-        }, 5000);
-        return;
-      }
+  actualizarUsuario() {
+    if (this.formUsuario.valid) {
+      const id = this.formUsuario.get('id')?.value;
 
-      for (let index = 0; index < this.existentIds.length; index++) {
-        if (this.existentIds[index] == id) {
-          this.mostrarAlertaID = true;
-          setTimeout(() => {
-              this.mostrarAlertaID = false;
-          }, 5000);
-          return;
-        }
-      }
-      
-
-      this.service.actualizarJuego(id, this.formVideojuego.value).subscribe({
+      this.servicioUsuario.actualizarUsuarios(id, this.formUsuario.value).subscribe({
         next: (resp) => {
-          console.log('Juego actualizado', resp);
-          this.formVideojuego.reset();
+          console.log('Usuario actualizado', resp);
+          this.formUsuario.reset();
           this.mostrarAlerta = true;
           setTimeout(() => {
             this.mostrarAlerta = false;
           }, 5000);
         },
         error: (e) => {
+          console.error('Error al actualizar usuario', e);
         }
       });
     } else {
@@ -77,23 +59,23 @@ export class UpdateUserComponent implements OnInit {
   }
 
   private marcarControlesComoTocados() {
-    Object.values(this.formVideojuego.controls).forEach(control => {
+    Object.values(this.formUsuario.controls).forEach(control => {
       control.markAsTouched();
     });
   }
 
-  onJuegoEncontrado(juego: VideojuegoModel | null): void {
-    this.juegoEncontrado = juego;
-    if (juego) {
-      this.formVideojuego.patchValue({
-        id: juego.id,
-        nombre: juego.nombre,
-        precio: juego.precio,
-        multijugador: juego.multijugador.toString(),
-        fechaLanzamiento: juego.fechaLanzamiento
+  onUsuarioEncontrado(usuario: UserModel | null): void {
+    this.usuarioEncontrado = usuario;
+    if (usuario) {
+      this.formUsuario.patchValue({
+        id: usuario.id,
+        nombre: usuario.nombre,
+        estatura: usuario.estatura,
+        esPremium: usuario.esPremium.toString(),
+        fechaNacimiento: usuario.fechaNacimiento
       });
     } else {
-      this.formVideojuego.reset();
+      this.formUsuario.reset();
     }
   }
 }

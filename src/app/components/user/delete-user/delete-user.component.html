@@ -11,17 +11,17 @@
                 <legend style="font-size: 15px;"><span class="number">!</span>Please read the information of the game to be deleted carefully.</legend>
                     <label for="validationDefault01" class="form-label">ID:</label>
                     <input type="text" class="form-control" id="validationDefault01"
-                        placeholder="Video Game ID" formControlName="id" required pattern="[0-9]+"
+                        placeholder="User ID" formControlName="id" required pattern="[0-9]+"
                         [ngClass]="{ 'is-invalid': formUser.get('id')?.invalid && (formUser.get('id')?.touched || formUser.get('id')?.dirty) }" readonly>
 
                     <label for="validationDefault02" class="form-label">Name:</label>
                     <input type="text" class="form-control" id="validationDefault02"
-                        placeholder="Name of the Video Game" formControlName="nombre" readonly
+                        placeholder="Name of the User" formControlName="nombre" readonly
                         [ngClass]="{ 'is-invalid': formUser.get('nombre')?.invalid && (formUser.get('nombre')?.touched || formUser.get('nombre')?.dirty) }">
 
                     <label for="validationDefault03" class="form-label">Height:</label>
                     <input type="text" class="form-control" id="validationDefault03"
-                        placeholder="Price of the Video Game" formControlName="estatura" readonly pattern="[0-9]+(\.[0-9]+)?"
+                        placeholder="Height of the User" formControlName="estatura" readonly pattern="[0-9]+(\.[0-9]+)?"
                         [ngClass]="{ 'is-invalid': formUser.get('estatura')?.invalid && (formUser.get('estatura')?.touched || formUser.get('estatura')?.dirty) }">
 
                     <label for="validationDefault04" class="form-label">Birthdate:</label>

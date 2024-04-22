@@ -13,11 +13,11 @@ export class ServicioVideoJuegoService {
 
   //VideoJuegos
   leerJuegos(id: number): Observable<VideojuegoModel[]> {
-    return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos?id=${id}`);
+    return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos/${id}`);
   }
 
-  agregarJuegos(request: any): Observable<VideojuegoModel[]>{
-    return this.http.post<VideojuegoModel[]>('http://localhost:8080/videojuego', request)
+  agregarJuegos(id:number, request: any): Observable<VideojuegoModel[]>{
+    return this.http.post<VideojuegoModel[]>(`http://localhost:8080/videojuegos/${id}`, request)
       .pipe(map((data) => data));
   }
 
@@ -43,11 +43,8 @@ export class ServicioVideoJuegoService {
     return this.http.get<VideojuegoModel>('http://localhost:8080/videojuego/buscar', { params });
   }
 
-  buscarJuegoUnico(id: string): Observable<VideojuegoModel> {
-    const params = { id };
-    console.log('Buscando juego por ID:', id);
-    
-    return this.http.get<VideojuegoModel>('http://localhost:8080/videojuego/buscar', { params });
+  buscarJuegoUnico(id: number): Observable<VideojuegoModel[]> {
+    return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos/${id}`);
   }
 
   //Usuarios
@@ -62,6 +59,10 @@ export class ServicioVideoJuegoService {
 
   eliminarUsuarios(id: number): Observable<void> {
     return this.http.delete<void>(`http://localhost:8080/usuarios/${id}`);
+  }
+
+  actualizarUsuarios(id: number, usuario: UserModel): Observable<UserModel> {
+    return this.http.put<UserModel>(`http://localhost:8080/usuarios/${id}`, usuario);
   }
 
   buscarUsuarioUnico(id: string): Observable<UserModel> {

@@ -13,7 +13,7 @@ export class ReadComponent implements OnInit{
   filtroMultijugador: string = 'todos';
   id: number = 0;
 
-  constructor(private servicioVideoJuegoService: ServicioVideoJuegoService,
+  constructor(private servicio: ServicioVideoJuegoService,
               private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class ReadComponent implements OnInit{
   }
 
   listar(id: number){
-    this.servicioVideoJuegoService.leerJuegos(id).subscribe((data:any) => {
+    this.servicio.leerJuegos(id).subscribe((data:any) => {
       if(data){
         if (this.filtroMultijugador !== 'todos') {
           this.listVideojuegos = data.filter((item:any) => {
