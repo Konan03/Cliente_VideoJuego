@@ -33,32 +33,32 @@ export class UpdateComponent implements OnInit {
 
   actualizarVideojuego() {
     if (this.formVideojuego.valid) {
-      const id = this.formVideojuego.get('id')?.value;
-      if (this.existentIds.includes(id)) {
-        this.mostrarAlertaID = true;
-        setTimeout(() => {
-          this.mostrarAlertaID = false;
-        }, 5000);
-        return;
+      const usuarioId = this.usuarioEncontrado?.id;
+      const juegoId = this.formVideojuego.get('id')?.value;
+  
+      if (usuarioId) {
+        this.service.actualizarJuego(usuarioId, juegoId, this.formVideojuego.value).subscribe({
+          next: (resp) => {
+            console.log('Juego actualizado', resp);
+            this.formVideojuego.reset();
+            this.mostrarAlerta = true;
+            setTimeout(() => {
+              this.mostrarAlerta = false;
+              this.mostrarForm = false;
+              this.mostrarForm2 = false;
+            }, 3000);
+          },
+          error: (e) => {
+          }
+        });
+      } else {
+        console.error('No se ha seleccionado ningún usuario');
       }
-
-      this.service.actualizarJuego(id, this.formVideojuego.value).subscribe({
-        next: (resp) => {
-          console.log('Juego actualizado', resp);
-          this.formVideojuego.reset();
-          this.mostrarAlerta = true;
-          setTimeout(() => {
-            this.mostrarAlerta = false;
-          }, 5000);
-        },
-        error: (e) => {
-          // Manejo de error
-        }
-      });
     } else {
       this.marcarControlesComoTocados();
     }
   }
+  
 
   private marcarControlesComoTocados() {
     Object.values(this.formVideojuego.controls).forEach(control => {

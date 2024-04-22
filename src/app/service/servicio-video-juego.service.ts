@@ -21,8 +21,8 @@ export class ServicioVideoJuegoService {
       .pipe(map((data) => data));
   }
 
-  actualizarJuego(id: number, videojuego: VideojuegoModel): Observable<VideojuegoModel> {
-    return this.http.put<VideojuegoModel>(`http://localhost:8080/videojuego/${id}`, videojuego);
+  actualizarJuego(userid:number, id: number, videojuego: VideojuegoModel): Observable<VideojuegoModel> {
+    return this.http.put<VideojuegoModel>(`http://localhost:8080/videojuegos/${userid}/${id}`, videojuego);
   }
 
   eliminarJuego(id: number): Observable<void> {
