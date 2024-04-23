@@ -2,11 +2,17 @@
     <h1> Delete VideoGame</h1>
 </div>
 
-<!--<app-search (juegoEncontrado)="onJuegoEncontrado($event)"></app-search>-->
+<app-search (usuarioEncontrado)="onUserEncontrado($event)"></app-search>
+    
+<div *ngIf="mostrarForm" class="col-md-12 alert alert-warning" role="alert">
+    Delete a game to {{usuarioEncontrado?.nombre}} with ID {{usuarioEncontrado?.id}}
+</div>
 
-<div class="row g-3 needs-validation" [formGroup]="formVideojuego" novalidate>
+<app-search2 *ngIf="mostrarForm" [existentIds]="existentIds" (juegoEncontrado)="onJuegoEncontrado($event)"></app-search2>
+
+<div class="row g-3 needs-validation" *ngIf="mostrarForm2" [formGroup]="formVideojuego" novalidate>
     <div class="col-md-12">
-        <form class="row g-3 needs-validation" [formGroup]="formVideojuego" novalidate (ngSubmit)="eliminarVideojuego(formVideojuego.get('id')?.value)">
+        <form class="row g-3 needs-validation" [formGroup]="formVideojuego" novalidate (ngSubmit)="usuarioEncontrado && eliminarVideojuego(usuarioEncontrado.id, formVideojuego.get('id')?.value)">
             <fieldset>
                 <legend style="font-size: 15px;"><span class="number">!</span>Please read the information of the game to be deleted carefully.</legend>
                     <label for="validationDefault01" class="form-label">ID:</label>

@@ -23,7 +23,7 @@ export class CreateUserComponent {
       id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
       nombre: new FormControl('', [Validators.required]),
       estatura: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]+)?$')]),
-      premium: new FormControl('', [Validators.required]),
+      esPremium: new FormControl('', [Validators.required]),
       fechaNacimiento: new FormControl('', [Validators.required])
     });
     

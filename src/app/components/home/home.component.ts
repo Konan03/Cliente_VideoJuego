@@ -1,8 +1,8 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { VideojuegoModel } from '../../model/videojuego.model';
 import { ServicioVideoJuegoService } from '../../service/servicio-video-juego.service';
-import { Observable } from 'rxjs';
+import { UserModel } from '../../model/user.model';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,39 +10,53 @@ import { Observable } from 'rxjs';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  juegosEncontrados: VideojuegoModel[] = [];
+  usuarioEncontrado: UserModel | null = null;
+  condicion: boolean = false;
   searchForm: FormGroup = new FormGroup({
     id: new FormControl(''),
     nombre: new FormControl(''),
-    precio: new FormControl('')
+    estatura: new FormControl(''),
+    esPremium: new FormControl('')
   });
 
-  @Output() juegosEncontradosEvent = new EventEmitter<VideojuegoModel[]>();
-
-  constructor(private servicioJuego: ServicioVideoJuegoService) {}
+  constructor(private servicioUsuario: ServicioVideoJuegoService) {}
 
   ngOnInit(): void {}
 
-  buscarVideojuego() {
+  buscarUsuario() {
     const id = this.searchForm.get('id')?.value;
     const nombre = this.searchForm.get('nombre')?.value;
-    const precio = this.searchForm.get('precio')?.value;
-    const busqueda = id || nombre || precio; // Asegurar que al menos uno está lleno
-
-    if (busqueda) {
-      this.servicioJuego.buscarJuego(busqueda).subscribe({
-        next: (juego: VideojuegoModel) => {
-          this.juegosEncontrados = [juego]; // Asumiendo que retorna un solo juego
-          this.juegosEncontradosEvent.emit(this.juegosEncontrados);
-        },
-        error: (error: any) => {
-          console.error('Error al buscar juegos', error);
-          this.juegosEncontradosEvent.emit([]);
-        }
-      });
-    } else {
-      console.log('Por favor ingrese al menos un criterio de búsqueda.');
-      this.juegosEncontradosEvent.emit([]);
+    const estatura = this.searchForm.get('estatura')?.value;
+    const esPremium = this.searchForm.get('esPremium')?.value;
+  
+    if (!id && !nombre && !estatura && !esPremium) {
+      console.error('Por favor, ingrese al menos un criterio de búsqueda.');
+      return;
     }
-  }
+  
+    this.servicioUsuario.buscarUsuarioParametro(id, nombre, estatura, esPremium).pipe(
+      map((usuarios: UserModel[] | UserModel) => {
+        if (Array.isArray(usuarios)) {
+          return usuarios.length > 0 ? usuarios[0] : null;
+        } else {
+          return usuarios;
+        }
+      })
+    ).subscribe({
+      next: (usuario: UserModel | null) => {
+        if (usuario) {
+          this.usuarioEncontrado = usuario;
+          this.condicion = true;
+        } else {
+          this.usuarioEncontrado = null;
+          this.condicion = false;
+        }
+      },
+      error: (error: any) => {
+        console.error('Error al buscar usuarios', error);
+        this.usuarioEncontrado = null;
+        this.condicion = false;
+      }
+    });
+  }  
 }

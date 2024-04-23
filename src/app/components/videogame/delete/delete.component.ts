@@ -2,6 +2,7 @@ import {Component, Output} from '@angular/core';
 import {VideojuegoModel} from "../../../model/videojuego.model";
 import { ServicioVideoJuegoService } from '../../../service/servicio-video-juego.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserModel } from '../../../model/user.model';
 
 @Component({
   selector: 'app-delete',
@@ -9,15 +10,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './delete.component.css'
 })
 export class DeleteComponent {
+  mostrarForm: boolean = false;
+  mostrarForm2: boolean = false;
   mostrarAlertaID: boolean = false
   mostrarAlerta: boolean = false;
   formVideojuego: FormGroup = new FormGroup({});
-  existentIds: number[] = [];
+  existentIds: VideojuegoModel[] = [];
+  usuarioEncontrado: UserModel | null = null;
+  juegoEncontrado: VideojuegoModel | null = null;
   
   constructor(private service: ServicioVideoJuegoService) { }
 
   ngOnInit(): void {
-    this.obtenerIdsExistentes();
 
     this.formVideojuego = new FormGroup({
       id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
@@ -28,42 +32,53 @@ export class DeleteComponent {
     });
   }
 
-  obtenerIdsExistentes() {
-    /**this.service.leerJuegos().subscribe(juegos => {
-      this.existentIds = juegos.map(juego => juego.id);
-    });*/
-  }
-
-  eliminarVideojuego(id: number) {
-    if (confirm('Are you sure you want to delete this video game?')) {
-      this.service.eliminarJuego(id).subscribe({
+  eliminarVideojuego(usuarioId: number, id: number) {
+    if (confirm('¿Estás seguro de que quieres eliminar este videojuego?')) {
+      this.service.eliminarJuego(usuarioId, id).subscribe({
         next: () => {
-          console.log('Successfully removed video game');
+          console.log('Videojuego eliminado correctamente');
           this.formVideojuego.reset();
           this.mostrarAlerta = true;
           setTimeout(() => {
             this.mostrarAlerta = false;
           }, 5000);
-
         },
         error: (error) => {
-          console.error('There was an error deleting the game', error);
+          console.error('Hubo un error al eliminar el juego', error);
         }
       });
     }
   }
+  
 
-  onJuegoEncontrado(juego: VideojuegoModel | null): void {
-    if (juego) {
-      this.formVideojuego.patchValue({
-        id: juego.id,
-        nombre: juego.nombre,
-        precio: juego.precio,
-        multijugador: juego.multijugador.toString(),
-        fechaLanzamiento: juego.fechaLanzamiento
+  onUserEncontrado(user: UserModel | null): void {
+    this.usuarioEncontrado = user;
+    if (user) {
+      this.mostrarForm = true;
+      this.service.leerJuegos(user.id).subscribe(juegos => {
+        this.existentIds = juegos;
+        console.log('Lista de IDs de videojuegos:', this.existentIds);
       });
     } else {
       this.formVideojuego.reset();
     }
   }
+
+  onJuegoEncontrado(juego: VideojuegoModel | null): void {
+    if (juego) {
+      this.mostrarForm2 = true;
+      console.log(juego)
+      this.juegoEncontrado = juego;
+      this.formVideojuego.patchValue({
+        id: this.juegoEncontrado.id,
+        nombre: this.juegoEncontrado.nombre,
+        precio: this.juegoEncontrado.precio,
+        multijugador: this.juegoEncontrado.multijugador.toString(),
+        fechaLanzamiento: this.juegoEncontrado.fechaLanzamiento
+      });
+    } else {
+      this.juegoEncontrado = null;
+      this.formVideojuego.reset();
+    }
+  }    
 }

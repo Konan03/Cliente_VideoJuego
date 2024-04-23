@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable, map} from "rxjs";
 import { VideojuegoModel } from '../model/videojuego.model';
 import { UserModel } from '../model/user.model';
@@ -25,9 +25,9 @@ export class ServicioVideoJuegoService {
     return this.http.put<VideojuegoModel>(`http://localhost:8080/videojuegos/${userid}/${id}`, videojuego);
   }
 
-  eliminarJuego(id: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/videojuego/${id}`);
-  }
+  eliminarJuego(usuarioId: number, id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/videojuegos/${usuarioId}/${id}`);
+  }  
 
   buscarJuego(busqueda: string): Observable<VideojuegoModel> {
     var params: any = { query: busqueda };
@@ -71,4 +71,23 @@ export class ServicioVideoJuegoService {
     
     return this.http.get<UserModel>('http://localhost:8080/usuarios', { params });
   }
+
+  buscarUsuarioParametro(id?: number, nombre?: string, estatura?: number, esPremium?: boolean): Observable<UserModel[]> {
+    let params = new HttpParams();
+    if (id) {
+      params = params.set('id', id.toString());
+    }
+    if (nombre) {
+      params = params.set('nombre', nombre);
+    }
+    if (estatura !== undefined) {
+      params = params.set('estatura', estatura.toString());
+    }
+    if (esPremium !== undefined) {
+      params = params.set('esPremium', esPremium.toString());
+    }
+
+    return this.http.get<UserModel[]>('http://localhost:8080/usuarios', { params });
+  }
+
 }
