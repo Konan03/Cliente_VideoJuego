@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ServicioVideoJuegoService} from "../../../service/servicio-video-juego.service";
 import { VideojuegoModel } from '../../../model/videojuego.model';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-read',
@@ -12,7 +13,12 @@ export class ReadComponent implements OnInit{
   listVideojuegos: VideojuegoModel [] = [];
   filtroMultijugador: string = 'todos';
   id: number = 0;
-
+  searchForm: FormGroup = new FormGroup({
+    id: new FormControl(''),
+    nombre: new FormControl(''),
+    estatura: new FormControl(''),
+    esPremium: new FormControl('')
+  });
   constructor(private servicio: ServicioVideoJuegoService,
               private route: ActivatedRoute) {}
 
@@ -44,4 +50,6 @@ export class ReadComponent implements OnInit{
   onChangeFiltroMultijugador() {
       this.listar(this.id);
   }
+
+  buscarVideojuego(){}
 }

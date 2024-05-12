@@ -47,6 +47,28 @@ export class ServicioVideoJuegoService {
     return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos/${id}`);
   }
 
+  obtenerJuegosDeUsuario(id: number): Observable<VideojuegoModel[]> {
+    return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos/usuario/${id}`);
+  }
+
+  buscarJuegosUsuario(id: number, parametros: any): Observable<VideojuegoModel[]> {
+    let params = new HttpParams();
+    if (parametros.id) {
+      params = params.set('id', parametros.id.toString());
+    }
+    if (parametros.nombre) {
+      params = params.set('nombre', parametros.nombre);
+    }
+    if (parametros.precio) {
+      params = params.set('precio', parametros.precio.toString());
+    }
+    if (parametros.multijugador !== undefined) {
+      params = params.set('multijugador', parametros.multijugador.toString());
+    }
+    return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos/usuario/${id}`, { params });
+  }
+  
+
   //Usuarios
   leerUsuarios(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>('http://localhost:8080/usuarios');
