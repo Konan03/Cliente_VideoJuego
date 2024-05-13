@@ -88,10 +88,8 @@ export class ServicioVideoJuegoService {
   }
 
   buscarUsuarioUnico(id: string): Observable<UserModel> {
-    const params = { id };
     console.log('Buscando usuario por ID:', id);
-    
-    return this.http.get<UserModel>('http://localhost:8080/usuarios', { params });
+    return this.http.get<UserModel>(`http://localhost:8080/usuarios/${id}`);
   }
 
   buscarUsuarioParametro(id?: number, nombre?: string, estatura?: number, esPremium?: boolean): Observable<UserModel[]> {
