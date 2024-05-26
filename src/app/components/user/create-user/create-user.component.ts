@@ -38,7 +38,7 @@ export class CreateUserComponent {
   crearUsuario() {
     if (this.formUser.valid) {
       const id = this.formUser.get('id')?.value;
-      if (this.existentIds == id) {
+      if (this.existentIds.find((data)=> data == id)) {
         this.mostrarAlertaID = true;
         setTimeout(() => {
             this.mostrarAlertaID = false;
@@ -47,7 +47,6 @@ export class CreateUserComponent {
       }
       this.service.agregarUsuarios(this.formUser.value).subscribe(resp => {
         if (resp) {
-          console.log(resp);
           this.formUser.reset();
           this.mostrarAlerta = true;
           setTimeout(() => {

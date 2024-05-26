@@ -38,16 +38,16 @@ export class CreateComponent implements OnInit {
       
       const idUsuario = this.usuarioEncontrado.id;
       const idJuego = this.formVideojuego.get('id')?.value;
-      
       let juegoExistente = false;
+
       for (let i = 0; i < this.existentIds.length; i++) {
-        if (this.existentIds[i] === idJuego) {
+        if (this.existentIds[i] == idJuego) {
           juegoExistente = true;
         break;
         }
       }
 
-      if (this.existentIds.includes(idJuego)) {
+      if (juegoExistente) {
         this.mostrarAlertaID = true;
         setTimeout(() => {
           this.mostrarAlertaID = false;
@@ -66,6 +66,8 @@ export class CreateComponent implements OnInit {
             setTimeout(() => {
               this.mostrarAlerta = false;
             }, 5000);
+          } else {
+            console.log("No se pudo mi rey")
           }
         });
       }

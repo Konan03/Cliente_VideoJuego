@@ -10,12 +10,10 @@
     </select>
 </div>
 
-<div class="search-form">
+<div class="search-form" >
     <form [formGroup]="searchForm" (ngSubmit)="buscarVideojuego()">
       <input type="text" formControlName="id" placeholder="Buscar por ID" aria-label="Buscar por ID">
       <input type="text" formControlName="nombre" placeholder="Buscar por Nombre" aria-label="Buscar por Nombre">
-      <input type="text" formControlName="precio" placeholder="Buscar por Estatura" aria-label="Buscar por Estatura">
-      <input type="text" formControlName="multijugador" placeholder="Buscar por Premium" aria-label="Buscar por Premium">
       <button type="submit" class="buttonform">Buscar</button>
     </form>
   </div>
