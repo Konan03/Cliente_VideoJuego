@@ -16,8 +16,8 @@ export class ReadComponent implements OnInit{
   searchForm: FormGroup = new FormGroup({
     id: new FormControl(''),
     nombre: new FormControl(''),
-    estatura: new FormControl(''),
-    esPremium: new FormControl('')
+    precio: new FormControl(''),
+    multijugador: new FormControl('')
   });
   constructor(private servicio: ServicioVideoJuegoService,
               private route: ActivatedRoute) {}
@@ -51,5 +51,18 @@ export class ReadComponent implements OnInit{
       this.listar(this.id);
   }
 
-  buscarVideojuego(){}
+  buscarVideojuego() {
+    const id = this.searchForm.get('id')?.value;
+    const nombre = this.searchForm.get('nombre')?.value;
+    const precio = this.searchForm.get('precio')?.value;
+    const multijugador = this.searchForm.get('multijugador')?.value;
+  
+    this.servicio.obtenerVideojuegosDeUsuario(this.id, id, nombre, precio, multijugador)
+      .subscribe((data: VideojuegoModel[]) => {
+        console.log(data);
+        this.listVideojuegos = data;
+      });
+  }
+  
+  
 }

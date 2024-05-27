@@ -50,24 +50,34 @@ export class ServicioVideoJuegoService {
   obtenerJuegosDeUsuario(id: number): Observable<VideojuegoModel[]> {
     return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos/usuario/${id}`);
   }
-
-  buscarJuegosUsuario(id: number, parametros: any): Observable<VideojuegoModel[]> {
-    let params = new HttpParams();
-    if (parametros.id) {
-      params = params.set('id', parametros.id.toString());
-    }
-    if (parametros.nombre) {
-      params = params.set('nombre', parametros.nombre);
-    }
-    if (parametros.precio) {
-      params = params.set('precio', parametros.precio.toString());
-    }
-    if (parametros.multijugador !== undefined) {
-      params = params.set('multijugador', parametros.multijugador.toString());
-    }
-    return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos/usuario/${id}`, { params });
-  }
   
+  obtenerVideojuegosDeUsuario(
+    usuarioId: number,
+    id?: number,
+    nombre?: string,
+    precio?: number,
+    multijugador?: boolean
+  ): Observable<VideojuegoModel[]> {
+    let params = new HttpParams();
+    
+    if (id !== undefined && id !== null) {
+      params = params.append('id', id.toString());
+    }
+    if (nombre !== undefined && nombre !== null) {
+      params = params.append('nombre', nombre);
+    }
+    if (precio !== undefined && precio !== null) {
+      params = params.append('precio', precio.toString());
+    }
+    if (multijugador !== undefined && multijugador !== null) {
+      params = params.append('multijugador', multijugador.toString());
+    }
+
+    const url = `http://localhost:8080/videojuegos/usuario/${usuarioId}`;
+    console.log('Request URL:', url, 'Params:', params.toString());
+  
+    return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos/usuario/${usuarioId}`, { params });
+  }
 
   //Usuarios
   leerUsuarios(): Observable<UserModel[]> {
