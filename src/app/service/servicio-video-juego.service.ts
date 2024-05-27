@@ -60,24 +60,25 @@ export class ServicioVideoJuegoService {
   ): Observable<VideojuegoModel[]> {
     let params = new HttpParams();
     
-    if (id !== undefined && id !== null) {
+    if (id != null) {
       params = params.append('id', id.toString());
     }
-    if (nombre !== undefined && nombre !== null) {
+    if (nombre != null && nombre.trim() !== '') {
       params = params.append('nombre', nombre);
     }
-    if (precio !== undefined && precio !== null) {
+    if (precio != null) {
       params = params.append('precio', precio.toString());
     }
-    if (multijugador !== undefined && multijugador !== null) {
+    if (multijugador != null) {
       params = params.append('multijugador', multijugador.toString());
     }
-
-    const url = `http://localhost:8080/videojuegos/usuario/${usuarioId}`;
-    console.log('Request URL:', url, 'Params:', params.toString());
   
-    return this.http.get<VideojuegoModel[]>(`http://localhost:8080/videojuegos/usuario/${usuarioId}`, { params });
-  }
+    const url = `http://localhost:8080/videojuegos/usuario/${usuarioId}`;
+    console.log('Request URL:', url);
+    console.log('Request Params:', params.toString());
+  
+    return this.http.get<VideojuegoModel[]>(url, { params });
+  }  
 
   //Usuarios
   leerUsuarios(): Observable<UserModel[]> {

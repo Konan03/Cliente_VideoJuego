@@ -57,12 +57,17 @@ export class ReadComponent implements OnInit{
     const precio = this.searchForm.get('precio')?.value;
     const multijugador = this.searchForm.get('multijugador')?.value;
   
+    if (!id && !nombre && !precio && !multijugador) {
+      console.warn('Debe proporcionar al menos un criterio de búsqueda');
+      return;
+    }
+  
     this.servicio.obtenerVideojuegosDeUsuario(this.id, id, nombre, precio, multijugador)
       .subscribe((data: VideojuegoModel[]) => {
         console.log(data);
         this.listVideojuegos = data;
+      }, error => {
+        console.error('Error fetching videojuegos:', error);
       });
-  }
-  
-  
+  }  
 }
