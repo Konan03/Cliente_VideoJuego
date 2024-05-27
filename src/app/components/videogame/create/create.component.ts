@@ -66,8 +66,6 @@ export class CreateComponent implements OnInit {
             setTimeout(() => {
               this.mostrarAlerta = false;
             }, 5000);
-          } else {
-            console.log("No se pudo mi rey")
           }
         });
       }
