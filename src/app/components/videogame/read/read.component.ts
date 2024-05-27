@@ -65,7 +65,7 @@ export class ReadComponent implements OnInit{
     this.servicio.obtenerVideojuegosDeUsuario(this.id, id, nombre, precio, multijugador)
       .subscribe((data: VideojuegoModel[]) => {
         console.log(data);
-        this.listVideojuegos = data;
+        this.listVideojuegos = data.length > 0 ? [data[0]] : [];
       }, error => {
         console.error('Error fetching videojuegos:', error);
       });
